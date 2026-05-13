@@ -34,3 +34,5 @@ data/
 
 # OS generated files
 Thumbs.db
+
+.env
