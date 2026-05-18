@@ -15,7 +15,7 @@ RESTful API architecture
 Real-time event processing logic
 Failure identification across services
 
-System Architecture
+System Architecture 
 
 Application Services
         │
