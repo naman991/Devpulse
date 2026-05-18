@@ -35,7 +35,6 @@ Event Store   Trace Analyzer
                   ▼
             API Responses
 
-
 Tech Stack
 
 Backend
