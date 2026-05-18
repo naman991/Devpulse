@@ -11,29 +11,29 @@ The project simulates how modern monitoring platforms help engineers detect fail
 
 ---
 
-## ✨ Features
+##  Features
 
-- 📥 Event & Log Ingestion APIs  
-- 🔍 Distributed Trace Analysis  
-- ⚡ Root Cause Detection  
-- 🔗 Service Dependency Tracking  
-- 📊 Backend Monitoring Workflows  
-- 🛠 RESTful API Architecture  
-- 📡 Real-Time Event Processing  
-- 🚨 Failure Identification Across Services  
+- Event & Log Ingestion APIs  
+- Distributed Trace Analysis  
+- Root Cause Detection  
+- Service Dependency Tracking  
+- Backend Monitoring Workflows  
+- RESTful API Architecture  
+- Real-Time Event Processing  
+- Failure Identification Across Services  
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 ```text
  ┌──────────────────────┐
- │  Application Services │
+ │  Application Services│
  └──────────┬───────────┘
             │
             ▼
  ┌──────────────────────┐
- │ Event / Log Generator │
+ │ Event / Log Generator│
  └──────────┬───────────┘
             │
             ▼
@@ -47,9 +47,9 @@ The project simulates how modern monitoring platforms help engineers detect fail
  └────────────┘ └───────┬────────┘
                         │
                         ▼
-              ┌─────────────────┐
+              ┌─────────────────-┐
               │ Root Cause Engine│
-              └────────┬────────┘
+              └────────┬────────-┘
                        │
                        ▼
               ┌─────────────────┐
