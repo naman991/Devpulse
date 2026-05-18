@@ -1,7 +1,7 @@
 Overview
 
 DevPulse is a backend monitoring and observability system designed to process application events, analyze distributed traces, and identify root causes of failures across services.
-
+ 
 The project simulates how modern monitoring platforms help engineers detect failures, debug issues, and understand dependencies in distributed systems.
 
 Features
