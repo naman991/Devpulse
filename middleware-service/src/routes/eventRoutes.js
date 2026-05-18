@@ -12,7 +12,7 @@ router.post('/logs', createEvent);
 
 router.get('/traces/:trace_id', getTrace);
 
-router.get('root-cause/', getRootCause);
+// router.get('root-cause/', getRootCause);
 
 router.get('/events', getEvents);
 

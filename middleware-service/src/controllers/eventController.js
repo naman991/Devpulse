@@ -211,3 +211,52 @@ exports.getRootCause = async (req, res) => {
     }
 
 };
+exports.getRootCause = async (req, res) => {
+
+    try {
+
+        const traceId = req.params.traceId;
+
+        const events = await Event.find({
+            trace_id: traceId
+        }).sort({ timestamp: 1 });
+
+        if (events.length === 0) {
+
+            return res.status(404).json({
+                success: false,
+                message: 'No trace found'
+            });
+
+        }
+
+        const rootCause = events.find(
+            event => event.parent_event === null
+        );
+
+        const sideEffects = events.filter(
+            event => event.parent_event !== null
+        );
+
+        res.status(200).json({
+
+            success: true,
+
+            trace_id: traceId,
+
+            root_cause: rootCause,
+
+            cascading_failures: sideEffects
+
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+
+    }
+
+};
