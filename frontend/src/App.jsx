@@ -1,122 +1,201 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from 'react';
+import axios from 'axios';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+
+  const [traceId, setTraceId] = useState('');
+
+  const [traceData, setTraceData] = useState(null);
+
+  const [loading, setLoading] = useState(false);
+
+  const [error, setError] = useState('');
+
+  const fetchTrace = async () => {
+
+    if (!traceId) return;
+
+    try {
+
+      setLoading(true);
+
+      setError('');
+
+      const response = await axios.get(
+        `http://localhost:8000/api/root-cause/${traceId}`
+      );
+
+      setTraceData(response.data);
+
+      setLoading(false);
+
+    } catch (error) {
+
+      console.log(error.message);
+
+      setError('Trace not found or backend error');
+
+      setLoading(false);
+
+    }
+
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+
+    <div className="min-h-screen bg-slate-950 text-white p-8">
+
+      <div className="max-w-6xl mx-auto">
+
+        {/* Header */}
+
+        <div className="mb-12">
+
+          <h1 className="text-6xl font-bold mb-4 text-cyan-400">
+            DevPulse
+          </h1>
+
+          <p className="text-slate-400 text-xl">
+            Distributed Observability & Root Cause Investigation Platform
           </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        {/* Search Box */}
+
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 mb-10 shadow-2xl">
+
+          <div className="flex flex-col md:flex-row gap-4">
+
+            <input
+              type="text"
+              placeholder="Enter Trace ID..."
+              value={traceId}
+              onChange={(e) => setTraceId(e.target.value)}
+              className="bg-slate-800 border border-slate-700 rounded-2xl px-5 py-4 flex-1 outline-none text-white"
+            />
+
+            <button
+              onClick={fetchTrace}
+              className="bg-cyan-500 hover:bg-cyan-600 transition-all px-8 py-4 rounded-2xl font-semibold"
+            >
+              Investigate
+            </button>
+
+          </div>
+
+        </div>
+
+        {/* Loading */}
+
+        {loading && (
+
+          <div className="text-cyan-400 text-lg mb-8">
+            Investigating distributed trace...
+          </div>
+
+        )}
+
+        {/* Error */}
+
+        {error && (
+
+          <div className="bg-red-500/10 border border-red-500 text-red-400 rounded-2xl p-5 mb-8">
+            {error}
+          </div>
+
+        )}
+
+        {/* Trace Data */}
+
+        {traceData && (
+
+          <div>
+
+            {/* Root Cause */}
+
+            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 mb-10">
+
+              <h2 className="text-3xl font-bold mb-8 text-red-400">
+                Root Cause Analysis
+              </h2>
+
+              <div className="bg-red-500/10 border border-red-500 rounded-2xl p-6">
+
+                <p className="text-red-400 text-sm mb-2">
+                  ORIGINATING FAILURE
+                </p>
+
+                <h3 className="text-3xl font-bold mb-3">
+                  {traceData.root_cause.event}
+                </h3>
+
+                <p className="text-slate-300 text-lg">
+                  Generated by {traceData.root_cause.service}
+                </p>
+
+              </div>
+
+            </div>
+
+            {/* Failure Chain */}
+
+            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8">
+
+              <h2 className="text-3xl font-bold mb-10 text-cyan-400">
+                Cascading Failure Chain
+              </h2>
+
+              <div className="flex flex-col gap-8">
+
+                {traceData.cascading_failures.map((failure, index) => (
+
+                  <div
+                    key={index}
+                    className="flex items-start gap-6"
+                  >
+
+                    <div className="flex flex-col items-center">
+
+                      <div className="w-5 h-5 rounded-full bg-cyan-400 mt-2" />
+
+                      {index !== traceData.cascading_failures.length - 1 && (
+                        <div className="w-1 h-24 bg-slate-700 mt-2 rounded-full" />
+                      )}
+
+                    </div>
+
+                    <div className="flex-1 bg-slate-800 border border-slate-700 rounded-2xl p-6">
+
+                      <h3 className="text-2xl font-semibold mb-3">
+                        {failure.event}
+                      </h3>
+
+                      <p className="text-slate-400 mb-2">
+                        Generated by {failure.service}
+                      </p>
+
+                      <p className="text-cyan-400 text-sm">
+                        Parent Event: {failure.parent_event}
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+            </div>
+
+          </div>
+
+        )}
+
+      </div>
+
+    </div>
+
+  );
 }
-
-export default App
