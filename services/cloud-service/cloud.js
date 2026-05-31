@@ -7,7 +7,7 @@ const checkEvents = async () => {
     try {
 
         const response = await axios.get(
-            'http://localhost:8000/api/events'
+            'http://middleware-service:8000/api/events'
         );
 
         const events = response.data.events;
@@ -41,7 +41,7 @@ const checkEvents = async () => {
                     try {
 
                         await axios.post(
-                            'http://localhost:8000/api/logs',
+                            'http://middleware-service:8000/api/logs',
                             newEvent
                         );
 

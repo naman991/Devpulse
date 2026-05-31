@@ -1,4 +1,5 @@
 const Event = require('../models/Event');
+const { totalEvents } = require('../config/metrics');
 
 
 // CREATE EVENT
@@ -7,6 +8,7 @@ exports.createEvent = async (req, res) => {
     try {
 
         const event = await Event.create(req.body);
+        totalEvents.inc();
 
         res.status(201).json({
             success: true,

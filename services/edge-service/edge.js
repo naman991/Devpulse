@@ -7,14 +7,13 @@ const pollEvents = async () => {
     try {
 
         const response = await axios.get(
-            'http://localhost:8000/api/events'
+            'http://middleware-service:8000/api/events'
         );
 
         const events = response.data.events;
 
         for (const event of events) {
 
-            // Only react to sensor failures
             if (
                 event.event === 'sensor_failure' &&
                 !processedTraces.has(event.trace_id)
@@ -33,10 +32,11 @@ const pollEvents = async () => {
                     parent_event: 'sensor_failure',
 
                     timestamp: new Date()
+
                 };
 
                 await axios.post(
-                    'http://localhost:8000/api/logs',
+                    'http://middleware-service:8000/api/logs',
                     newEvent
                 );
 
@@ -50,7 +50,10 @@ const pollEvents = async () => {
 
     } catch (error) {
 
-        console.log('Edge Error:', error.message);
+        console.log(
+            'Edge Error:',
+            error.message
+        );
 
     }
 

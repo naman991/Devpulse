@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+
+  middleware-service:
+
+    build: ./middleware-service
+
+    ports:
+      - "8000:8000"
+
+    container_name: middleware-service
+
+  sensor-service:
+
+    build: ./services/sensor-service
+
+    container_name: sensor-service
+
+    depends_on:
+      - middleware-service
+
+  edge-service:
+
+    build: ./services/edge-service
+
+    container_name: edge-service
+
+    depends_on:
+      - middleware-service
+
+  cloud-service:
+
+    build: ./services/cloud-service
+
+    container_name: cloud-service
+
+    depends_on:
+      - middleware-service
+
+  dashboard-service:
+
+    build: ./services/dashboard-service
+
+    container_name: dashboard-service
+
+    depends_on:
+      - middleware-service

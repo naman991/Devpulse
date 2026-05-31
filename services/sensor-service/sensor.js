@@ -29,7 +29,7 @@ const generateEvent = async () => {
         };
 
         const response = await axios.post(
-            'http://localhost:8000/api/logs',
+            'http://middleware-service:8000/api/logs',
             event
         );
 
