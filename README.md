@@ -100,13 +100,11 @@ ReactUI --> Middleware
 
 ## 📸 Dashboard
 
-> Add screenshots here
+<img width="1370" height="348" alt="WhatsApp Image 2026-05-22 at 15 18 46" src="https://github.com/user-attachments/assets/b30e395c-12f0-40a5-a792-94e9209d31f8" />
+<img width="1550" height="1412" alt="12345 " src="https://github.com/user-attachments/assets/63e6dac9-ca4f-4745-813a-34d00823474a" />
+
 
 ```text
-screenshots/dashboard.png
-screenshots/root-cause.png
-```
-
 ---
 
 ## 🚀 Quick Start
